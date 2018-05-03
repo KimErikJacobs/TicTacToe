@@ -4,12 +4,13 @@ class Board {
 	/**
 	* @var array $board
 	**/
-	private $board = array(array("","",""),
-					 array("","",""),
-					 array("","",""),
-			
+	private $board = array(
+						array("","",""),
+						array("","",""),
+						array("","",""),
 					 );
 	
+
 	/**
 	* @return $board
 	*/
@@ -18,8 +19,10 @@ class Board {
 	}
 
 
-	public function getPosition(){
-		$field = $_GET;
-		var_dump ($field);
+	public function setPosition($row, $col){
+		//var_dump($this->board);
+		$this->board[$row][$col] = "X";
+		var_dump($this->board);
 	}
+	
 }
