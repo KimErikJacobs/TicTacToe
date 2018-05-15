@@ -5,7 +5,33 @@ require_once("TicTacToe.php");
 require_once("Board.php");
 require_once("Player.php");
 
-echo '<!DOCTYPE html>
+if (isset($_SESSION['TicTacToe'])) {
+	$game = unserialize($_SESSION['TicTacToe']);
+	$row = null;
+	$col = null;
+	for ($i = 0; $i < count($game->getBoard()->getBoard()); $i++) {
+		
+		for ($j = 0; $j < count($game->getBoard()->getBoard()); $j++) {
+			if(isset($_GET['cell-'.$i.'-'.$j])){
+				$output = $_GET['cell-'.$i.'-'.$j];
+				//var_dump($output);
+				$row = $i;
+				$col = $j;
+				break;
+			}
+		}
+	}
+	$game->playTurn($row,$col);
+} 
+else {
+	$board = new Board();
+	$playerOne = new Player("SpielerEins", "X");
+	$playerTwo = new Player("SpielerZwei", "O");
+	$game = new TicTacToe($board, $playerOne, $playerTwo);
+}
+
+?>
+<!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <title>Tic-Tac-Toe</title>
@@ -49,51 +75,16 @@ echo '<!DOCTYPE html>
             <p>Type your game instructions here...</p>
             <form method="get" action="index.php">
                 <table class="tic">
-                    <tr>
-						<td><span class="colorO" name="cell-0-0" value="O" >O</span></td>
-                        <td><input type="submit" class="reset field" name="cell-0-1" value="X" /></td>
-                        <td><input type="submit" class="reset field" name="cell-0-2" value="X" /></td>
-                    </tr>
-                    <tr>
-                        <td><span class="colorX" name="cell-1-0" value="X" >X</span></td>
-                        <td><input type="submit" class="reset field" name="cell-1-1" value="X" /></td>
-                        <td><input type="submit" class="reset field" name="cell-1-2" value="X" /></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" class="reset field" name="cell-2-0" value="X" /></td>
-                        <td><input type="submit" class="reset field" name="cell-2-1" value="X" /></td>
-                        <td><input type="submit" class="reset field" name="cell-2-2" value="X" /></td>
-                    </tr>
+					<?php
+						echo $game->getBoard()->boardInHTML();
+					?>
                 </table>
             </form>
         </article>
     </section>
 </body>
-</html>';
+</html>
 
-if (isset($_SESSION['TicTacToe'])) {
-	$game = unserialize($_SESSION['TicTacToe']);
-	$row = null;
-	$col = null;
-	for ($i = 0; $i < count($game->getBoard()->getBoard()); $i++) {
-		
-		for ($j = 0; $j < count($game->getBoard()->getBoard()); $j++) {
-			if(isset($_GET['cell-'.$i.'-'.$j])){
-				$output = $_GET['cell-'.$i.'-'.$j];
-				var_dump($output);
-				$row = $i;
-				$col = $j;
-				break;
-			}
-		}
-	}
-	$game->playTurn($row,$col);
-} 
-else {
-	$board = new Board();
-	$playerOne = new Player("SpielerEins", "X");
-	$playerTwo = new Player("SpielerZwei", "O");
-	$game = new TicTacToe($board, $playerOne, $playerTwo);
-}
+<?php
 $_SESSION['TicTacToe'] = serialize($game);
-
+?>
