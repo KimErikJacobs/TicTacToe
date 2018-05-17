@@ -1,9 +1,8 @@
 <?php
 session_start();
 //session_destroy();
-require_once("TicTacToe.php");
-require_once("Board.php");
-require_once("Player.php");
+define ('BASEPATH', realpath(dirname(__FILE__)));
+require_once (BASEPATH.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php');
 
 if (isset($_SESSION['TicTacToe'])) {
 	$game = unserialize($_SESSION['TicTacToe']);
