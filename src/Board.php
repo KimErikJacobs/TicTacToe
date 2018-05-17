@@ -18,7 +18,10 @@ class Board {
 		return $this->board;
 	}
 
-
+	/** This method will add HTML Code to the variable $output. It is used in index.php
+	* @var string $output
+	* @return $output
+	**/
 	public function boardInHTML(){
 		$output = "";
 		
@@ -44,7 +47,6 @@ class Board {
 		
 	public function setPosition($row, $col){
 	$this->board[$row][$col] = "X";
-	//var_dump($this->board);
 	}
 	
 	
