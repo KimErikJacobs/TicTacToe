@@ -4,40 +4,62 @@ class TicTacToe {
 	/**
 	* @var array $board
 	**/
-	private $board;			 
+	private $board;
+	
+	/**
+	* @var string playerOne
+	**/
 	private $playerOne;
+	
+	/**
+	* @var string playerTwo
+	**/
 	private $playerTwo;
+	
+	/**
+	* @var string currentPlayer
+	**/
+	private $currentPlayer;
 	
 	public function __construct(Board $board, Player $playerOne, Player $playerTwo){
 		$this->board = $board;
 		$this->playerOne = $playerOne;
 		$this->playerTwo = $playerTwo;
+		$this->currentPlayer = array($this->playerOne);
 	}
 	
-	/**
-	* Sets an "O" in $row/$column
+	/** Calls relevant methods for a playturn
 	* @param int $row
-	* @param int $column
+	* @param int $col
 	**/
 	public function playTurn($row, $col) {
+		$this->switchPlayer();
 		$this->checkWinner();
 		$this->board->setPosition($row, $col);
 		$this->board->boardInHTML($row, $col);
 	}
 
-	
+	/**
+	*
+	**/
 	public function showBoard(){
 		if ($this->checkWinner() == true) {
 			print("Winner");
 		}
 	}
 	
+	/**
+	*
+	**/
 	public function checkUnique($check) {
 		if (count($check) === 1 && !empty($check[0])){
 			return true;
 		}
 	}
 	
+	/**
+	*
+	**/
 	public function checkWinner(){
 		var_dump($this->board->getBoard());
 		for ($iRow = 0; $iRow < count($this->board->getBoard()); $iRow++) {
@@ -60,11 +82,25 @@ class TicTacToe {
 			}
 		}
 	}
-		
+	
+	/** Switches from playerOne to playerTwo or from playerTwo to playerOne
+	*
+	**/
 	public function switchPlayer() {
-		
-		//ToDo
+		if ($this->currentPlayer === $this->playerOne)
+		{
+			$this->currentPlayer === $this->playerTwo;
+		}	
+		elseif ($this->currentPlayer === $this->playerTwo)
+		{
+			$this->currentPlayer === $this->playerOne;
+		}					
+
 	}
+	
+	/**
+	* @return $board
+	**/
 	public function getBoard(){
 		return $this->board;
 	}
