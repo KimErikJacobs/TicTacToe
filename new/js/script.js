@@ -1,3 +1,0 @@
-$(document).ready(function () { // The document is ready now. Place your javascript inside these brackets...
-    console.log("document loaded");
-}); // End of the "document-ready"-block

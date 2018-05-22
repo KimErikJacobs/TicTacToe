@@ -22,7 +22,7 @@ class Board {
 	* @var string $output
 	* @return $output
 	**/
-	public function boardInHTML(){
+	public function boardInHTML(Player $currentPlayer){
 		$output = "";
 		
 		for($row = 0; $row < count($this->board); $row++){
@@ -36,7 +36,7 @@ class Board {
 					$output .= '<td><span class="colorO" name="cell-'.$row.'-'.$col.'" value="X" >O</span></td>';
 				}
 				else{
-					$output .= '<td><input type="submit" class="reset field" name="cell-'.$row.'-'.$col.'" value="X" /></td>';
+					$output .= '<td><input type="submit" class="reset field" name="cell-'.$row.'-'.$col.'" value="'.$currentPlayer->getSymbol().'" /></td>';
 				}
 			}
 		$output .= "</tr>";
@@ -44,9 +44,10 @@ class Board {
 		return $output;
 		
 	}
-		
-	public function setPosition($row, $col){
-	$this->board[$row][$col] = "X";
+	
+	
+	public function setPosition($row, $col, $symbol){
+	$this->board[$row][$col] = $symbol;
 	}
 	
 	
