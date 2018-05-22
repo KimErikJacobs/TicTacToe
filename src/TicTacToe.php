@@ -2,22 +2,22 @@
 
 class TicTacToe {
 	/**
-	* @var array $board
+	* @var Board $board
 	**/
 	private $board;
 	
 	/**
-	* @var string playerOne
+	* @var Player playerOne
 	**/
 	private $playerOne;
 	
 	/**
-	* @var string playerTwo
+	* @var Player playerTwo
 	**/
 	private $playerTwo;
 	
 	/**
-	* @var string currentPlayer
+	* @var Player currentPlayer
 	**/
 	private $currentPlayer;
 	
@@ -25,7 +25,8 @@ class TicTacToe {
 		$this->board = $board;
 		$this->playerOne = $playerOne;
 		$this->playerTwo = $playerTwo;
-		$this->currentPlayer = array($this->playerOne);
+		$this->currentPlayer = $playerOne;
+	
 	}
 	
 	/** Calls relevant methods for a playturn
@@ -33,19 +34,9 @@ class TicTacToe {
 	* @param int $col
 	**/
 	public function playTurn($row, $col) {
+		$this->board->setPosition($row, $col, $this->currentPlayer->getSymbol());
+		$this->board->boardInHTML($this->currentPlayer);
 		$this->switchPlayer();
-		$this->checkWinner();
-		$this->board->setPosition($row, $col);
-		$this->board->boardInHTML($row, $col);
-	}
-
-	/**
-	*
-	**/
-	public function showBoard(){
-		if ($this->checkWinner() == true) {
-			print("Winner");
-		}
 	}
 	
 	/**
@@ -57,30 +48,86 @@ class TicTacToe {
 		}
 	}
 	
-	/**
-	*
+	/** checks rows and columns for a winner
+	* @param Board $board
+	* @var string $winner
 	**/
-	public function checkWinner(){
-		var_dump($this->board->getBoard());
-		for ($iRow = 0; $iRow < count($this->board->getBoard()); $iRow++) {
-			$checkRow = array_unique($this->board->getBoard()[$iRow]);
-
-			for ($iColumn = 0; $iColumn < count($this->board->getBoard()); $iColumn++) {
-				$checkColumn[] = $this->board->getBoard()[$iColumn][$iRow];
-				
-
+	public function checkWinner($board){
+			$winner = "";
+			if($board[0][0] == "O" && $board[0][1] == "O" && $board[0][2] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[1][0] == "O" && $board[1][1] == "O" && $board[1][2] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[2][0] == "O" && $board[2][1] == "O" && $board[2][2] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[0][0] == "O" && $board[1][1] == "O" && $board[2][2] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[2][0] == "O" && $board[1][1] == "O" && $board[0][2] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[0][0] == "O" && $board[1][0] == "O" && $board[2][0] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[0][1] == "O" && $board[1][1] == "O" && $board[2][1] == "O")
+			{
+				$winner = "O";
+			}
+			if($board[0][2] == "O" && $board[1][2] == "O" && $board[2][2] == "O")
+			{
+				$winner = "O";
 			}
 			
-			$currDiaColumn = count($this->board->getBoard()) - 1 - ($iRow);
-			$checkDiaLeft[] = $this->board->getBoard()[$iRow][$currDiaColumn];
-			$checkDiaRight[] = $this->board->getBoard()[$iRow][$iRow];
-			if ($this->checkUnique($checkDiaLeft) 
-				|| $this->checkUnique($checkDiaRight) 
-				|| $this->checkUnique($checkRow) 
-				|| $this->checkUnique($checkColumn)){
-				return true;
+			
+			if($board[0][0] == "X" && $board[0][1] == "X"&& $board[0][2] == "X")
+			{
+				$winner = "X";
 			}
-		}
+			if($board[1][0] == "X" && $board[1][1] == "X" && $board[1][2] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[2][0] == "X" && $board[2][1] == "X" && $board[2][2] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[0][0] == "X" && $board[1][1] == "X" && $board[2][2] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[2][0] == "X" && $board[1][1] == "X" && $board[0][2] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[0][0] == "X" && $board[1][0] == "X" && $board[2][0] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[0][1] == "X" && $board[1][1] == "X" && $board[2][1] == "X")
+			{
+				$winner = "X";
+			}
+			if($board[0][2] == "X" && $board[1][2] == "X" && $board[2][2] == "X")
+			{
+				$winner = "X";
+			}
+			
+			if ($winner == "O")
+			{
+				return '<script>alert("O wins");</script>';
+			} elseif ($winner == "X")
+			{
+				return '<script>alert("X wins");</script>';
+			}
 	}
 	
 	/** Switches from playerOne to playerTwo or from playerTwo to playerOne
@@ -89,13 +136,16 @@ class TicTacToe {
 	public function switchPlayer() {
 		if ($this->currentPlayer === $this->playerOne)
 		{
-			$this->currentPlayer === $this->playerTwo;
+			$this->currentPlayer = $this->playerTwo;
 		}	
 		elseif ($this->currentPlayer === $this->playerTwo)
 		{
-			$this->currentPlayer === $this->playerOne;
+			$this->currentPlayer = $this->playerOne;
 		}					
-
+	}
+	
+	public function getCurrentPlayer() {
+		return $this->currentPlayer;
 	}
 	
 	/**
@@ -104,4 +154,5 @@ class TicTacToe {
 	public function getBoard(){
 		return $this->board;
 	}
+	
 }
