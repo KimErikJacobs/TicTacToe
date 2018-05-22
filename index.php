@@ -16,7 +16,6 @@ if (isset($_SESSION['TicTacToe']) && !empty($_SESSION['TicTacToe'])) {
 		for ($j = 0; $j < count($game->getBoard()->getBoard()); $j++) {
 			if(isset($_GET['cell-'.$i.'-'.$j])){
 				$output = $_GET['cell-'.$i.'-'.$j];
-				//var_dump($output);
 				$row = $i;
 				$col = $j;
 				break;
@@ -95,7 +94,8 @@ else {
         }
         input.field:hover {
             border: 0;
-            color: #c81657; /* red on hover */
+         /*   color: #c81657;  red on hover */
+			color: #000000;
         }
         table.tic input{
             width: 2rem;
@@ -138,7 +138,7 @@ else {
         <h1 class="bg-colorESFLBlau">Hi, Flensburg developers!</h1>
         <p>Here comes the first game..</p>
         <button data-target="#infotext" class="btn btn-default btn-xs" data-toggle="collapse"><span class="glyphicon glyphicon-menu-up"></span> Infotext minimieren/maximieren.</button>
-        <div id="infotext" class="jumbotron col-md-12 collapse in">
+        <div id="infotext" class="jumbotron col-md-12 collapse">
             <div class="col-md-3">
                 <a title="By Thomas Steiner [GFDL (http://www.gnu.org/copyleft/fdl.html) or CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/)], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3ATictactoe1.gif" target="_blank">
                     <img alt="Tictactoe1" src="https://upload.wikimedia.org/wikipedia/commons/3/33/Tictactoe1.gif" class="img-responsive img-rounded"/></a>
@@ -155,7 +155,8 @@ else {
                     <form method="get" class="">
                         <table class="tic" style="border-collapse: collapse">
 							<?php
-								echo $game->getBoard()->boardInHTML();
+								echo $game->getBoard()->boardInHTML($game->getCurrentPlayer());
+								echo $game->checkWinner($game->getBoard()->getBoard());
 							?>
                         </table>
 <!--                        <p>Computer intelligence:
